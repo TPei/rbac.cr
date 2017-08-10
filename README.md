@@ -4,7 +4,21 @@ rbac.cr provides simple role based access control for crystal programs
 
 ## Installation
 
-TODO: Write installation instructions here
+
+Add to your shard.yml
+
+```yaml
+dependencies:
+  rbac.cr:
+    github: tpei/rbac.cr
+    branch: master
+```
+
+and then install the library into your project with
+
+```bash
+$ crystal deps
+```
 
 ## Usage
 

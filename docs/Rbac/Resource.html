@@ -71,7 +71,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/TPei/rbac.cr/blob/07b9726cd72c5f0215d3b678bac461eeb0f43640/src/rbac/resource.cr#L2" target="_blank">rbac/resource.cr</a>
+      <a href="https://github.com/TPei/rbac.cr/blob/94bb66f917879b4e274f72687b63453a59cc33b2/src/rbac/resource.cr#L2" target="_blank">rbac/resource.cr</a>
     
     <br/>
   
@@ -114,7 +114,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#may%3F%28roleable%3ARoleable%2Crole%3ASymbol%29-instance-method" class="signature"><strong>#may?</strong>(roleable : Roleable, role : Symbol)</a>
+        <a href="#may%3F%28roleable%3ARoleable%2C%2A_roles%3ASymbol%29-instance-method" class="signature"><strong>#may?</strong>(roleable : Roleable, *_roles : Symbol)</a>
         
           <div class="summary"><p>check if a Roleable has a specific role that the resource has <code></code>` s = Store.new # includes Resource s.has_roles :add, :delete</p></div>
         
@@ -161,7 +161,7 @@ s.authorized?(u) <span class="c"># &#61;&gt; true because of :add</span></code><
       <br/>
       <div>
         
-          [<a href="https://github.com/TPei/rbac.cr/blob/07b9726cd72c5f0215d3b678bac461eeb0f43640/src/rbac/resource.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/TPei/rbac.cr/blob/94bb66f917879b4e274f72687b63453a59cc33b2/src/rbac/resource.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -183,7 +183,7 @@ s.has_role? <span class="n">:add</span> <span class="c"># &#61;&gt; true</span><
       <br/>
       <div>
         
-          [<a href="https://github.com/TPei/rbac.cr/blob/07b9726cd72c5f0215d3b678bac461eeb0f43640/src/rbac/resource.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/TPei/rbac.cr/blob/94bb66f917879b4e274f72687b63453a59cc33b2/src/rbac/resource.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -204,7 +204,7 @@ s.has_roles [<span class="n">:add</span>, <span class="n">:delete</span>]</code>
       <br/>
       <div>
         
-          [<a href="https://github.com/TPei/rbac.cr/blob/07b9726cd72c5f0215d3b678bac461eeb0f43640/src/rbac/resource.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/TPei/rbac.cr/blob/94bb66f917879b4e274f72687b63453a59cc33b2/src/rbac/resource.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -225,17 +225,17 @@ s.has_roles <span class="n">:add</span>, <span class="n">:delete</span></code></
       <br/>
       <div>
         
-          [<a href="https://github.com/TPei/rbac.cr/blob/07b9726cd72c5f0215d3b678bac461eeb0f43640/src/rbac/resource.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/TPei/rbac.cr/blob/94bb66f917879b4e274f72687b63453a59cc33b2/src/rbac/resource.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="may?&#40;roleable:Roleable,role:Symbol&#41;-instance-method">
+    <div class="entry-detail" id="may?&#40;roleable:Roleable,*_roles:Symbol&#41;-instance-method">
       <div class="signature">
         
-        def <strong>may?</strong>(roleable : <a href="../Rbac/Roleable.html">Roleable</a>, role : Symbol)
+        def <strong>may?</strong>(roleable : <a href="../Rbac/Roleable.html">Roleable</a>, *_roles : Symbol)
 
-        <a class="method-permalink" href="#may%3F%28roleable%3ARoleable%2Crole%3ASymbol%29-instance-method">#</a>
+        <a class="method-permalink" href="#may%3F%28roleable%3ARoleable%2C%2A_roles%3ASymbol%29-instance-method">#</a>
       </div>
       
         <div class="doc"><p>check if a Roleable has a specific role that the resource has</p>
@@ -248,12 +248,15 @@ u.has_roles <span class="n">:add</span>, <span class="n">:edit</span>
 
 s.may?(u, <span class="n">:add</span>) <span class="c"># &#61;&gt; true</span>
 s.may?(u, <span class="n">:delete</span>) <span class="c"># &#61;&gt; false</span>
-s.may?(u, <span class="n">:edit</span>) <span class="c"># &#61;&gt; false because store does not include :edit role</span></code></pre></div>
+s.may?(u, <span class="n">:edit</span>) <span class="c"># &#61;&gt; false because store does not include :edit role</span>
+
+<span class="c"># check multiple rows at once:</span>
+s.may?(u, <span class="n">:add</span>, <span class="n">:delete</span>) <span class="c"># &#61;&gt; false</span></code></pre></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/TPei/rbac.cr/blob/07b9726cd72c5f0215d3b678bac461eeb0f43640/src/rbac/resource.cr#L63" target="_blank">View source</a>]
+          [<a href="https://github.com/TPei/rbac.cr/blob/94bb66f917879b4e274f72687b63453a59cc33b2/src/rbac/resource.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -269,7 +272,7 @@ s.may?(u, <span class="n">:edit</span>) <span class="c"># &#61;&gt; false becaus
       <br/>
       <div>
         
-          [<a href="https://github.com/TPei/rbac.cr/blob/07b9726cd72c5f0215d3b678bac461eeb0f43640/src/rbac/resource.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/TPei/rbac.cr/blob/94bb66f917879b4e274f72687b63453a59cc33b2/src/rbac/resource.cr#L3" target="_blank">View source</a>]
         
       </div>
     </div>

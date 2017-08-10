@@ -59,9 +59,17 @@ module Rbac
     # s.may?(u, :add) # => true
     # s.may?(u, :delete) # => false
     # s.may?(u, :edit) # => false because store does not include :edit role
+    #
+    # # check multiple rows at once:
+    # s.may?(u, :add, :delete) # => false
     # ```
-    def may?(roleable : Roleable, role : Symbol)
-      has_role?(role) && roleable.has_role?(role)
+    def may?(roleable : Roleable, *_roles : Symbol)
+      _roles.each do |role|
+        if(!has_role?(role) || !roleable.has_role?(role))
+          return false
+        end
+      end
+      return true
     end
   end
 end

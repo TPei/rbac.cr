@@ -80,6 +80,18 @@ describe Rbac::Resource do
       s.may?(u, :delete).should eq false
       s.may?(u, :edit).should eq false
     end
+
+    it "can be handed in multiple rows and checks that a roleable has all of them" do
+      u = User.new
+      u.has_roles :add, :edit, :delete
+
+      s = Store.new
+      s.has_roles :add, :delete, :swag
+
+      s.may?(u, :add, :delete).should eq true
+      s.may?(u, :add, :edit).should eq false # u has no :edit
+      s.may?(u, :add, :swag).should eq false # s hash no :swag
+    end
   end
 end
 

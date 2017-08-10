@@ -50,7 +50,7 @@
 <p><a href="https://travis-ci.org/TPei/rbac.cr" target="_blank"><img src="https://travis-ci.org/TPei/rbac.cr.svg?branch=master" alt="Build Status"/></a>
 <a href="https://github.com/TPei/rbac.cr/releases" target="_blank"><img src="https://img.shields.io/github/release/tpei/rbac.cr.svg" alt="Release"/></a>
 <a href="https://github.com/TPei/rbac.cr/blob/master/LICENSE" target="_blank"><img src="https://badges.frapsoft.com/os/mit/mit.png?v=103" alt="MIT"/></a>
-<a href="https://tpei.github.io/rbac.cr/index.html" target="_blank"><img src="https://img.shields.io/badge/docs-lastest-brightgreen.svg" alt="Docs"/></a></p>
+<a href="https://tpei.github.io/rbac.cr" target="_blank"><img src="https://img.shields.io/badge/docs-lastest-brightgreen.svg" alt="Docs"/></a></p>
 
 <p>rbac.cr provides simple role based access control for crystal programs</p>
 
@@ -109,6 +109,7 @@ impotent.has_roles <span class="n">:read</span>
 ds.authorized? author <span class="c"># &#61;&gt; true</span>
 ds.authorized? impotent <span class="c"># &#61;&gt; false</span>
 
+<span class="c"># and you can also check if a user has a specific resource right</span>
 ds.may?(admin, <span class="n">:delete</span>) <span class="c"># &#61;&gt; true</span>
 ds.may?(editor, <span class="n">:add</span>) <span class="c"># &#61;&gt; false</span>
 </code></pre>

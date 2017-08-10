@@ -1,0 +1,13 @@
+name: rbac.cr
+version: 0.1.0
+
+authors:
+  - TPei <t.s.peikert@gmail.com>
+
+targets:
+  rbac.cr:
+    main: src/rbac.cr
+
+crystal: 0.22.0
+
+license: MIT

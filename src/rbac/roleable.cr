@@ -14,6 +14,16 @@ module Rbac
       @roles.uniq!
     end
 
+    # add allowed roles
+    # ```
+    # s = Store.new # includes Resource
+    # s.has_roles [:add, :delete]
+    # ```
+    def has_roles(roles : Array(Symbol))
+      @roles += roles
+      @roles.uniq!
+    end
+
     # check if a accessor has a specific role
     # ```
     # u = User..new # includes Roleable

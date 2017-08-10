@@ -10,6 +10,14 @@ describe Rbac::Roleable do
       u.roles.should eq roles.to_a
     end
 
+    it "allows setting via array as well" do
+      roles = [:add, :edit]
+
+      s = Store.new
+      s.has_roles roles
+      s.roles.should eq roles.to_a
+    end
+
     it "does not have role duplicates" do
       roles = {:add, :edit}
 

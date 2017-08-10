@@ -48,10 +48,10 @@ ds.has_role? :read # => false
 
 # create users with different access levels
 admin = User.new
-admin.has_roles :add, :edit, :delete
+admin.has_roles ds.roles
 
 author = User.new
-author.has_roles :add
+author.has_roles :add, :edit
 
 editor = User.new
 editor.has_roles :edit
@@ -61,7 +61,7 @@ impotent.has_roles :read
 
 # now you can simply check if a user has any of the resource rights
 ds.authorized? author # => true
-ds.authorized? impotent # => flase
+ds.authorized? impotent # => false
 
 ds.may?(admin, :delete) # => true
 ds.may?(editor, :add) # => false

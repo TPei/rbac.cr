@@ -70,7 +70,26 @@ ds.authorized? impotent # => false
 # and you can also check if a user has a specific resource right
 ds.may?(admin, :add, :delete) # => true
 ds.may?(editor, :add) # => false
+```
 
+You can also define default roles per model by adding the `has_roles`
+call to the initializer:
+```crystal
+class UserWithDefaultRoles
+  include Rbac::Roleable
+
+  def initialize(name : String)
+    has_roles :add
+  end
+end
+
+# every instance now has this roles
+u = UserWithDefaultRoles.new("some existing argument")
+u.roles # => [:add]
+
+# roles can of course still be extended for class instances
+u.has_roles :edit, :delete
+u.roles # => [:add, :edit, :delete]
 ```
 
 

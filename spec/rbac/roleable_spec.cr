@@ -50,8 +50,24 @@ describe Rbac::Roleable do
       User.new.has_role?(:add).should eq false
     end
   end
+
+  it "is possible to define default roles for a class" do
+    u = UserWithDefaultRoles.new("some existing argument")
+    u.roles.should eq [:add]
+
+    u.has_roles :edit, :delete
+    u.roles.should eq [:add, :edit, :delete]
+  end
 end
 
 class User
   include Rbac::Roleable
+end
+
+class UserWithDefaultRoles
+  include Rbac::Roleable
+
+  def initialize(name : String)
+    has_roles :add
+  end
 end

@@ -78,13 +78,13 @@ call to the initializer:
 class UserWithDefaultRoles
   include Rbac::Roleable
 
-  def initialize(name : String)
+  def initialize
     has_roles :add
   end
 end
 
 # every instance now has this roles
-u = UserWithDefaultRoles.new("some existing argument")
+u = UserWithDefaultRoles.new
 u.roles # => [:add]
 
 # roles can of course still be extended for class instances

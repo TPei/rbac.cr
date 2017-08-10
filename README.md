@@ -68,7 +68,7 @@ ds.authorized? author # => true
 ds.authorized? impotent # => false
 
 # and you can also check if a user has a specific resource right
-ds.may?(admin, :delete) # => true
+ds.may?(admin, :add, :delete) # => true
 ds.may?(editor, :add) # => false
 
 ```

@@ -110,7 +110,7 @@ ds.authorized? author <span class="c"># &#61;&gt; true</span>
 ds.authorized? impotent <span class="c"># &#61;&gt; false</span>
 
 <span class="c"># and you can also check if a user has a specific resource right</span>
-ds.may?(admin, <span class="n">:delete</span>) <span class="c"># &#61;&gt; true</span>
+ds.may?(admin, <span class="n">:add</span>, <span class="n">:delete</span>) <span class="c"># &#61;&gt; true</span>
 ds.may?(editor, <span class="n">:add</span>) <span class="c"># &#61;&gt; false</span>
 </code></pre>
 

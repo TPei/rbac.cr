@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/TPei/rbac.cr.svg?branch=master)](https://travis-ci.org/TPei/rbac.cr)
 [![Release](https://img.shields.io/github/release/tpei/rbac.cr.svg)](https://github.com/TPei/rbac.cr/releases)
 [![MIT](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://github.com/TPei/rbac.cr/blob/master/LICENSE)
-[![Docs](https://img.shields.io/badge/docs-lastest-brightgreen.svg)](https://tpei.github.io/rbac.cr/index.html)
+[![Docs](https://img.shields.io/badge/docs-lastest-brightgreen.svg)](https://tpei.github.io/rbac.cr)
 
 rbac.cr provides simple role based access control for crystal programs
 

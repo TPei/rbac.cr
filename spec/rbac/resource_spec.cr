@@ -68,7 +68,7 @@ describe Rbac::Resource do
     end
   end
 
-  describe "may?" do
+  describe "authorized?(Roleable, *Symbol)" do
     it "checks if a roleable has a specific role" do
       u = User.new
       u.has_roles :add, :edit
@@ -76,9 +76,9 @@ describe Rbac::Resource do
       s = Store.new
       s.has_roles :add, :delete
 
-      s.may?(u, :add).should eq true
-      s.may?(u, :delete).should eq false
-      s.may?(u, :edit).should eq false
+      s.authorized?(u, :add).should eq true
+      s.authorized?(u, :delete).should eq false
+      s.authorized?(u, :edit).should eq false
     end
 
     it "can be handed in multiple rows and checks that a roleable has all of them" do
@@ -88,9 +88,23 @@ describe Rbac::Resource do
       s = Store.new
       s.has_roles :add, :delete, :swag
 
-      s.may?(u, :add, :delete).should eq true
-      s.may?(u, :add, :edit).should eq false # u has no :edit
-      s.may?(u, :add, :swag).should eq false # s hash no :swag
+      s.authorized?(u, :add, :delete).should eq true
+      s.authorized?(u, :add, :edit).should eq false # u has no :edit
+      s.authorized?(u, :add, :swag).should eq false # s hash no :swag
+    end
+  end
+
+  describe "may?" do
+    it "calls authorized?(Roleable, *Symbol)" do
+      u = User.new
+      u.has_roles :add, :edit
+
+      s = Store.new
+      s.has_roles :add, :delete
+
+      s.may?(u, :add).should eq s.authorized?(u, :add)
+      s.may?(u, :delete).should eq s.authorized?(u, :delete)
+      s.may?(u, :edit, :delete).should eq s.authorized?(u, :edit, :delete)
     end
   end
 end

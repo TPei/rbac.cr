@@ -56,20 +56,25 @@ module Rbac
     # u = User.new # includes Roleable
     # u.has_roles :add, :edit
     #
-    # s.may?(u, :add) # => true
-    # s.may?(u, :delete) # => false
-    # s.may?(u, :edit) # => false because store does not include :edit role
+    # s.authorized?(u, :add) # => true
+    # s.authorized?(u, :delete) # => false
+    # s.authorized?(u, :edit) # => false because store does not include :edit role
     #
     # # check multiple rows at once:
-    # s.may?(u, :add, :delete) # => false
+    # s.authorized?(u, :add, :delete) # => false
     # ```
-    def may?(roleable : Roleable, *_roles : Symbol)
+    def authorized?(roleable : Roleable, *_roles : Symbol)
       _roles.each do |role|
         if(!has_role?(role) || !roleable.has_role?(role))
           return false
         end
       end
       return true
+    end
+
+    # alias to `#authorized?(Roleable, *Symbol)`
+    def may?(roleable : Roleable, *_roles : Symbol)
+      authorized?(roleable, *_roles)
     end
   end
 end

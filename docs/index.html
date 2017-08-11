@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/TPei/rbac.cr">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/doc.js"></script>
+  <title>README - github.com/TPei/rbac.cr</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li class="current"><a href="index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent " data-id="github.com/TPei/rbac.cr/Rbac" data-name="rbac">
+      <a href="Rbac.html">Rbac</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/TPei/rbac.cr/Rbac/Accessor" data-name="rbac::accessor">
+      <a href="Rbac/Accessor.html">Accessor</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/TPei/rbac.cr/Rbac/Resource" data-name="rbac::resource">
+      <a href="Rbac/Resource.html">Resource</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1>rbac.cr</h1>
+
+<p><a href="https://travis-ci.org/TPei/rbac.cr" target="_blank"><img src="https://travis-ci.org/TPei/rbac.cr.svg?branch=master" alt="Build Status"/></a>
+<a href="https://github.com/TPei/rbac.cr/releases" target="_blank"><img src="https://img.shields.io/github/release/tpei/rbac.cr.svg" alt="Release"/></a>
+<a href="https://github.com/TPei/rbac.cr/blob/master/LICENSE" target="_blank"><img src="https://badges.frapsoft.com/os/mit/mit.png?v=103" alt="MIT"/></a>
+<a href="https://tpei.github.io/rbac.cr" target="_blank"><img src="https://img.shields.io/badge/docs-lastest-brightgreen.svg" alt="Docs"/></a></p>
+
+<p>rbac.cr provides simple role based access control for crystal programs</p>
+
+<h2>Installation</h2>
+
+<p>Add to your shard.yml</p>
+
+<pre><code class='language-yaml'>dependencies:
+  rbac.cr:
+    github: tpei/rbac.cr
+    branch: master</code></pre>
+
+<p>and then install the library into your project with</p>
+
+<pre><code class='language-bash'>$ crystal deps</code></pre>
+
+<h2>Usage</h2>
+
+<p>rbac.cr come with two basic modules</p>
+
+<ul><li><code><a href="Rbac/Resource.html">Rbac::Resource</a></code>: for which access is required</li><li><code><a href="Rbac/Accessor.html">Rbac::Accessor</a></code>: for instances that can be given access to resources</li></ul>
+
+<p>Consider the following simple example:</p>
+
+<pre><code class='language-crystal'><span class="c"># a DataStore that has different access levels</span>
+<span class="k">class</span> <span class="t">DataStore</span>
+  <span class="k">include</span> <span class="t">Rbac</span><span class="t">::</span><span class="t">Resource</span>
+<span class="k">end</span>
+
+<span class="c"># a User that can also have different access levels</span>
+<span class="k">class</span> <span class="t">User</span>
+  <span class="k">include</span> <span class="t">Rbac</span><span class="t">::</span><span class="t">Accessor</span>
+<span class="k">end</span>
+
+<span class="c"># create a DataStore and add access levels</span>
+ds <span class="o">=</span> <span class="t">DataStore</span>.<span class="k">new</span>
+ds.has_roles <span class="n">:add</span>, <span class="n">:edit</span>, <span class="n">:delete</span>
+ds.roles <span class="c"># &#61;&gt; &#91;:add, :edit, :delete&#93;</span>
+ds.has_role? <span class="n">:add</span> <span class="c"># &#61;&gt; true</span>
+ds.has_role? <span class="n">:read</span> <span class="c"># &#61;&gt; false</span>
+
+<span class="c"># create users with different access levels</span>
+admin <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span>
+admin.has_roles ds.roles
+
+author <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span>
+author.has_roles <span class="n">:add</span>, <span class="n">:edit</span>
+
+editor <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span>
+editor.has_roles <span class="n">:edit</span>
+
+impotent <span class="o">=</span> <span class="t">User</span>.<span class="k">new</span>
+impotent.has_roles <span class="n">:read</span>
+
+<span class="c"># now you can simply check if a user has any of the resource rights</span>
+ds.authorized? author <span class="c"># &#61;&gt; true</span>
+ds.authorized? impotent <span class="c"># &#61;&gt; false</span>
+
+<span class="c"># and you can also check if a user has a specific resource right</span>
+ds.authorized?(admin, <span class="n">:add</span>, <span class="n">:delete</span>) <span class="c"># &#61;&gt; true</span>
+
+<span class="c"># may is a shorthand for the &#96;authorized?&#40;Roleable, *Symbol&#41;&#96; method</span>
+ds.may?(editor, <span class="n">:add</span>) <span class="c"># &#61;&gt; false</span></code></pre>
+
+<p>You can also define default roles per model by adding the <code>has_roles</code>
+call to the initializer:</p>
+
+<pre><code class='language-crystal'><span class="k">class</span> <span class="t">UserWithDefaultRoles</span>
+  <span class="k">include</span> <span class="t">Rbac</span><span class="t">::</span><span class="t">Accessor</span>
+
+  <span class="k">def</span> <span class="m">initialize</span>
+    has_roles <span class="n">:add</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="c"># every instance now has this roles</span>
+u <span class="o">=</span> <span class="t">UserWithDefaultRoles</span>.<span class="k">new</span>
+u.roles <span class="c"># &#61;&gt; &#91;:add&#93;</span>
+
+<span class="c"># roles can of course still be extended for class instances</span>
+u.has_roles <span class="n">:edit</span>, <span class="n">:delete</span>
+u.roles <span class="c"># &#61;&gt; &#91;:add, :edit, :delete&#93;</span></code></pre>
+
+<h2>Contributing</h2>
+
+<ol><li>Fork it ( https://github.com/tpei/rbac/fork )</li><li>Create your feature branch (git checkout -b my-new-feature)</li><li>Commit your changes (git commit -am 'Add some feature')</li><li>Push to the branch (git push origin my-new-feature)</li><li>Create a new Pull Request</li></ol>
+
+<h2>Contributors</h2>
+
+<ul><li><a href="https://github.com/tpei" target="_blank">tpei</a> TPei - creator, maintainer</li></ul>
+</div>
+</body>
+</html>

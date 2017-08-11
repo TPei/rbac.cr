@@ -29,7 +29,7 @@ $ crystal deps
 rbac.cr come with two basic modules
 
 - `Rbac::Resource`: for which access is required
-- `Rbac::Roleable`: for instances that can be given access to resources
+- `Rbac::Accessor`: for instances that can be given access to resources
 
 Consider the following simple example:
 ```crystal
@@ -40,7 +40,7 @@ end
 
 # a User that can also have different access levels
 class User
-  include Rbac::Roleable
+  include Rbac::Accessor
 end
 
 # create a DataStore and add access levels
@@ -68,7 +68,9 @@ ds.authorized? author # => true
 ds.authorized? impotent # => false
 
 # and you can also check if a user has a specific resource right
-ds.may?(admin, :add, :delete) # => true
+ds.authorized?(admin, :add, :delete) # => true
+
+# may is a shorthand for the `authorized?(Roleable, *Symbol)` method
 ds.may?(editor, :add) # => false
 ```
 
@@ -76,7 +78,7 @@ You can also define default roles per model by adding the `has_roles`
 call to the initializer:
 ```crystal
 class UserWithDefaultRoles
-  include Rbac::Roleable
+  include Rbac::Accessor
 
   def initialize
     has_roles :add
@@ -95,7 +97,7 @@ u.roles # => [:add, :edit, :delete]
 
 ## Contributing
 
-1. Fork it ( https://github.com/[your-github-name]/rbac/fork )
+1. Fork it ( https://github.com/tpei/rbac/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -103,4 +105,4 @@ u.roles # => [:add, :edit, :delete]
 
 ## Contributors
 
-- [[tpei]](https://github.com/[tpei]) TPei - creator, maintainer
+- [tpei](https://github.com/tpei) TPei - creator, maintainer
